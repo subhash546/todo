@@ -4,9 +4,12 @@ from todos.models import task
 
 
 def home(request):
-    tasks=task.objects.filter(is_completed=False)
+    tasks=task.objects.filter(is_completed=False).order_by('-updated_at')
+    
+    tasksCompleted=task.objects.filter(is_completed=True).order_by('-updated_at')
     context={
-        "task":tasks
+        "task":tasks,
+        "taskcompleted":tasksCompleted
     }
     
     return render(request,"home.html",context)
